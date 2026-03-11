@@ -16,7 +16,7 @@ Las tareas finalizadas permiten registrar retroalimentación del usuario, la cua
 
 1. Clonar repositorio
 
-git clone https://github.com/tuusuario/django-tareas-sentimiento.git
+git clone https://github.com/donnyalx/django-task-sentiment-analysis.git
 
 2. Entrar al proyecto
 
