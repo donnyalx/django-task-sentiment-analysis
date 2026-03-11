@@ -1,0 +1,123 @@
+{% extends 'base.html' %} {% block title %}Registrarse - {{ block.super }}
+{%endblock %} {% block content %}
+<div class="form-container">
+  <div class="card shadow">
+    <div class="card-header bg-success text-white">
+      <h4 class="mb-0 text-center">
+        <i class="fas fa-user-plus me-2"></i>
+        Crear Cuenta Nueva
+      </h4>
+    </div>
+    <div class="card-body">
+      <!-- Formulario de registro -->
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Campo Username -->
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">
+            <i class="fas fa-user me-1"></i>
+            Usuario
+          </label>
+          <input
+            type="text"
+            class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+            id="{{ form.username.id_for_label }}"
+            name="{{ form.username.name }}"
+            value="{{ form.username.value|default:'' }}"
+            placeholder="Elige un nombre de usuario"
+            required
+          />
+          {% if form.username.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.username.errors %} {{ error }} {% endfor %}
+          </div>
+          {% endif %}
+          <div class="form-text">
+            <i class="fas fa-info-circle me-1"></i>
+            Requerido. 150 caracteres o menos. Solo letras, números y @/./+/-/_.
+          </div>
+        </div>
+
+        <!-- Campo Password1 -->
+        <div class="mb-3">
+          <label for="{{ form.password1.id_for_label }}" class="form-label">
+            <i class="fas fa-lock me-1"></i>
+            Contraseña
+          </label>
+          <input
+            type="password"
+            class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
+            id="{{ form.password1.id_for_label }}"
+            name="{{ form.password1.name }}"
+            placeholder="Ingresa una contraseña segura"
+            required
+          />
+          {% if form.password1.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.password1.errors %} {{ error }} {% endfor %}
+          </div>
+          {% endif %}
+          <div class="form-text">
+            <i class="fas fa-shield-alt me-1"></i>
+            Tu contraseña debe tener al menos 8 caracteres y no ser muy común.
+          </div>
+        </div>
+
+        <!-- Campo Password2 (Confirmación) -->
+        <div class="mb-3">
+          <label for="{{ form.password2.id_for_label }}" class="form-label">
+            <i class="fas fa-lock me-1"></i>
+            Confirmar Contraseña
+          </label>
+          <input
+            type="password"
+            class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+            id="{{ form.password2.id_for_label }}"
+            name="{{ form.password2.name }}"
+            placeholder="Repite la contraseña"
+            required
+          />
+          {% if form.password2.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.password2.errors %} {{ error }} {% endfor %}
+          </div>
+          {% endif %}
+          <div class="form-text">
+            <i class="fas fa-check-circle me-1"></i>
+            Ingresa la misma contraseña para confirmación.
+          </div>
+        </div>
+
+        <!-- Errores generales del formulario -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Botón de envío -->
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="fas fa-user-plus me-2"></i>
+            Crear Cuenta
+          </button>
+        </div>
+      </form>
+
+      <!-- Links adicionales -->
+      <div class="text-center mt-4">
+        <hr />
+        <p class="mb-0">
+          ¿Ya tienes cuenta?
+          <a href="{% url 'accounts:login' %}" class="text-decoration-none">
+            <i class="fas fa-sign-in-alt me-1"></i>
+            Inicia sesión aquí
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

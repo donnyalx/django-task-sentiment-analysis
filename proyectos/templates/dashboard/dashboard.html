@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %}Iniciar Sesión - {{ block.super }}
+{%endblock %} {% block content %}
+<div class="form-container">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">
+        <i class="fa-solid fa-face-smile me-2"></i>
+        Bienvendido a Gestión proyectos
+      </h4>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        <div class="mb-3">
+          <label for="" class="form-label">
+            <i class="fas fa-user me-1"></i>
+            Desde esta aplicación podras gestionar tus proyectos
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

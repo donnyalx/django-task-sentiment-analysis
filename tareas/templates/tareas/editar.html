@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %}Iniciar
+Sesión - {{ block.super }} {%endblock %} {% block content %}
+<div class="form-container">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">
+        <i class="fa fa-briefcase me-2"></i>
+        Creación de proyectos
+      </h4>
+    </div>
+    <div class="card-body">
+      {% comment %}
+      <div class="row">
+        {% if messages %} {% for message in messages %}
+        <div
+          class="alert {{ message.tags }} alert-dismissible fade show"
+          role="alert"
+          style="background-color: #041dec !important ; color: white"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+      {% endcomment %}
+
+      <form
+        method="post"
+        action="{% url 'tareas:editar_tarea' form.instance.id %}"
+      >
+        {% csrf_token %} {{ form|crispy }}
+        <!-- Botón de envío -->
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-custom btn-lg text-white">
+            Editar tarea
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const estado = document.getElementById("id_estado");
+
+    function toggleObservacion() {
+      const div = document.getElementById(
+        "div_id_observacion_retroalimentacion",
+      );
+      if (estado.value === "terminada") {
+        if (!div) {
+          // evita duplicar si ya existe
+          document
+            .getElementById("div_id_estado")
+            .insertAdjacentHTML(
+              "afterend",
+              '<div id="div_id_observacion_retroalimentacion" class="mb-3"> <label for="div_id_observacion_retroalimentacion" class="form-label">Observación - Retroalimentación</label> <textarea name="observacion_retroalimentacion" cols="40" rows="10" class="textarea form-control" id="div_id_observacion_retroalimentacion"></textarea> </div>',
+            );
+        }
+      } else {
+        if (div) div.remove();
+      }
+    }
+
+    toggleObservacion(); // ejecuta al cargar para verificar el valor inicial
+    estado.addEventListener("change", toggleObservacion); // ejecuta al cambiar
+  });
+</script>
+{% endblock %}

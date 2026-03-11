@@ -1,0 +1,95 @@
+{% extends 'base.html' %} {% block title %}Iniciar Sesión - {{ block.super }}
+{%endblock %} {% block content %}
+<div class="form-container">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">
+        <i class="fas fa-sign-in-alt me-2"></i>
+        Iniciar Sesión
+      </h4>
+    </div>
+    <div class="card-body">
+      <!-- Formulario de login -->
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Campo Username -->
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">
+            <i class="fas fa-user me-1"></i>
+            Usuario
+          </label>
+          <input
+            type="text"
+            class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+            id="{{ form.username.id_for_label }}"
+            name="{{ form.username.name }}"
+            value="{{ form.username.value|default:'' }}"
+            placeholder="Ingresa tu usuario"
+            required
+          />
+          {% if form.username.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.username.errors %} {{ error }} {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Campo Password -->
+        <div class="mb-3">
+          <label for="{{ form.password.id_for_label }}" class="form-label">
+            <i class="fas fa-lock me-1"></i>
+            Contraseña
+          </label>
+          <input
+            type="password"
+            class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+            id="{{ form.password.id_for_label }}"
+            name="{{ form.password.name }}"
+            placeholder="Ingresa tu contraseña"
+            required
+          />
+          {% if form.password.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors %} {{ error }} {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Errores generales del formulario -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Botón de envío -->
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-custom btn-lg">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            Iniciar Sesión
+          </button>
+        </div>
+
+        <!-- Input hidden para next (redirección) -->
+        {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %}
+      </form>
+
+      <!-- Links adicionales -->
+      <div class="text-center mt-4">
+        <hr />
+        <p class="mb-0">
+          ¿No tienes cuenta?
+          <a href="{% url 'accounts:registro' %}" class="text-decoration-none">
+            <i class="fas fa-user-plus me-1"></i>
+            Regístrate aquí
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
